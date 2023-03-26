@@ -20,6 +20,7 @@ public class Config {
                 .allowAllAccess(true)
                 .allowExperimentalOptions(true)
                 .option("python.ForceImportSite", "true")
+                //TODO Should be extracted to env var
                 .option("python.Executable", "/Users/Marton_Szabo1/dev/python/bin/graalpy")
                 .build();
 
