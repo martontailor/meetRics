@@ -1,0 +1,3 @@
+python:
+  venv: ${PYTHON_VENV_PATH:/Users/Marton_Szabo1/dev/python/bin/graalpy}
+  name: ${PYTHON_CHARTVISUALIZER_NAME:first.py}
