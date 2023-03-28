@@ -1,13 +1,16 @@
 package com.mtailor.meetRics.service.impl;
 
 import com.mtailor.meetRics.model.Metric;
+import com.mtailor.meetRics.model.MetricTuple;
 import com.mtailor.meetRics.service.Base64SvgSplitter;
 import com.mtailor.meetRics.service.MetricVisualizer;
 import com.mtailor.meetRics.service.PythonChartVisualizer;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Base64;
+import java.util.List;
 
 @Service
 public class SimplePythonMetricVisualizer implements MetricVisualizer {
@@ -22,14 +25,22 @@ public class SimplePythonMetricVisualizer implements MetricVisualizer {
 
     @Override
     public String visualize(Metric metrics) {
-        double[] values = new double[]{1.9, 23.33, 55.44, 11.33, 3, 100};
 
-        String result = pythonChartVisualizer.render(Metric.builder()
-                .name("Metric From Java")
-                .values(values)
-                .earliest(LocalDate.now().toEpochDay())
-                .latest(LocalDate.now().plusDays(values.length).toEpochDay())
-                .build());
+        long firstTimeInMs = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
+        long secondTimeInMs = LocalDateTime.now().plusSeconds(1).toInstant(ZoneOffset.UTC).toEpochMilli();
+        long thirdTimeInMs = LocalDateTime.now().plusSeconds(2).toInstant(ZoneOffset.UTC).toEpochMilli();
+        long fourthTimeInMs = LocalDateTime.now().plusSeconds(3).toInstant(ZoneOffset.UTC).toEpochMilli();
+        long fifthTimeInMs = LocalDateTime.now().plusSeconds(5).toInstant(ZoneOffset.UTC).toEpochMilli();
+
+        List<MetricTuple> metricTuples = List.of(
+                new MetricTuple(22, firstTimeInMs),
+                new MetricTuple(33, secondTimeInMs),
+                new MetricTuple(55, thirdTimeInMs),
+                new MetricTuple(25, fourthTimeInMs),
+                new MetricTuple(17, fifthTimeInMs)
+        );
+
+        String result = pythonChartVisualizer.render(new Metric("Metric from java", metricTuples));
 
         return decode(result);
     }
