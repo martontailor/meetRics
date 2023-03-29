@@ -1,6 +1,5 @@
-package com.mtailor.meetrics.service.impl;
+package com.mtailor.meetrics.service.chart.impl;
 
-import com.mtailor.meetrics.service.chart.impl.SimplePythonMetricVisualizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
