@@ -1,6 +1,6 @@
 package com.mtailor.meetrics.service.chart.impl;
 
-import com.mtailor.meetrics.model.Metric;
+import com.mtailor.meetrics.model.request.BasicMetricRequest;
 import com.mtailor.meetrics.service.chart.MetricVisualizer;
 
 /**
@@ -8,7 +8,7 @@ import com.mtailor.meetrics.service.chart.MetricVisualizer;
  */
 public class RealTimeMetricVisualizer implements MetricVisualizer {
     @Override
-    public String visualize(Metric metrics) {
+    public String visualize(final BasicMetricRequest request) {
         return null;
     }
 }

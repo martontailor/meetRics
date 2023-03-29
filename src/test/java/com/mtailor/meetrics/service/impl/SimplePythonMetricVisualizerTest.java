@@ -10,7 +10,7 @@ class SimplePythonMetricVisualizerTest {
 
     @BeforeEach
     public void setUp() {
-        simplePythonMetricVisualizer = new SimplePythonMetricVisualizer(null, null);
+        simplePythonMetricVisualizer = new SimplePythonMetricVisualizer(null, null, null);
     }
 
     @Test
