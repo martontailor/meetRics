@@ -1,10 +1,10 @@
-package com.mtailor.meetRics.service.impl;
+package com.mtailor.meetRics.service.chart.impl;
 
 import com.mtailor.meetRics.model.Metric;
 import com.mtailor.meetRics.model.MetricTuple;
 import com.mtailor.meetRics.service.Base64SvgSplitter;
-import com.mtailor.meetRics.service.MetricVisualizer;
-import com.mtailor.meetRics.service.PythonChartVisualizer;
+import com.mtailor.meetRics.service.chart.MetricVisualizer;
+import com.mtailor.meetRics.service.chart.PythonChartVisualizer;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,6 +12,9 @@ import java.time.ZoneOffset;
 import java.util.Base64;
 import java.util.List;
 
+/**
+ * This class is responsible for visualizing a single metric request.
+ */
 @Service
 public class SimplePythonMetricVisualizer implements MetricVisualizer {
 

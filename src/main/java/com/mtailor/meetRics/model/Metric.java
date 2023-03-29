@@ -3,7 +3,9 @@ package com.mtailor.meetRics.model;
 import java.util.List;
 
 /**
- * Dataholder object for passing metric to Python code.
+ * Record for passing metrics and metric name to Python code.
+ * @param name of metrics
+ * @param metrics tuple of value-times
  */
 public record Metric(String name, List<MetricTuple> metrics) {
 }
