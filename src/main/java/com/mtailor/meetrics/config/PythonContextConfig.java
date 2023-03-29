@@ -1,7 +1,7 @@
-package com.mtailor.meetRics.config;
+package com.mtailor.meetrics.config;
 
-import com.mtailor.meetRics.service.PythonChartVisualizer;
-import com.mtailor.meetRics.service.impl.SimplePythonMetricVisualizer;
+import com.mtailor.meetrics.service.chart.PythonChartVisualizer;
+import com.mtailor.meetrics.service.chart.impl.SimplePythonMetricVisualizer;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -1,4 +1,4 @@
-package com.mtailor.meetRics;
+package com.mtailor.meetrics;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.mtailor.meetRics.model;
+package com.mtailor.meetrics.model;
 
 import java.util.List;
 

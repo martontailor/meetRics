@@ -1,6 +1,6 @@
-package com.mtailor.meetRics.service.chart;
+package com.mtailor.meetrics.service.chart;
 
-import com.mtailor.meetRics.model.Metric;
+import com.mtailor.meetrics.model.Metric;
 
 /**
  * Interface for python code.

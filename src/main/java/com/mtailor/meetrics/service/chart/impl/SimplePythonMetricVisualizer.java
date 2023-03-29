@@ -1,10 +1,10 @@
-package com.mtailor.meetRics.service.chart.impl;
+package com.mtailor.meetrics.service.chart.impl;
 
-import com.mtailor.meetRics.model.Metric;
-import com.mtailor.meetRics.model.MetricTuple;
-import com.mtailor.meetRics.service.Base64SvgSplitter;
-import com.mtailor.meetRics.service.chart.MetricVisualizer;
-import com.mtailor.meetRics.service.chart.PythonChartVisualizer;
+import com.mtailor.meetrics.model.Metric;
+import com.mtailor.meetrics.model.MetricTuple;
+import com.mtailor.meetrics.service.Base64SvgSplitter;
+import com.mtailor.meetrics.service.chart.MetricVisualizer;
+import com.mtailor.meetrics.service.chart.PythonChartVisualizer;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

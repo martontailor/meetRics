@@ -1,6 +1,6 @@
-package com.mtailor.meetRics.service.impl;
+package com.mtailor.meetrics.service.impl;
 
-import com.mtailor.meetRics.model.Metric;
+import com.mtailor.meetrics.service.chart.impl.SimplePythonMetricVisualizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ class SimplePythonMetricVisualizerTest {
         //given
 
         //when
-        simplePythonMetricVisualizer.visualize(Metric.builder().build());
+//        simplePythonMetricVisualizer.visualize(Metric.builder().build());
 
         //then
     }

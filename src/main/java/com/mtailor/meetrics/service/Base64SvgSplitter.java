@@ -1,4 +1,4 @@
-package com.mtailor.meetRics.service;
+package com.mtailor.meetrics.service;
 
 import org.springframework.stereotype.Component;
 

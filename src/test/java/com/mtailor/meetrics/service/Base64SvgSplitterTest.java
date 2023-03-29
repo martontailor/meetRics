@@ -1,4 +1,4 @@
-package com.mtailor.meetRics.service;
+package com.mtailor.meetrics.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

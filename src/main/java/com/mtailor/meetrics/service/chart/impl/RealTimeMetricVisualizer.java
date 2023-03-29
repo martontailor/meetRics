@@ -1,7 +1,7 @@
-package com.mtailor.meetRics.service.chart.impl;
+package com.mtailor.meetrics.service.chart.impl;
 
-import com.mtailor.meetRics.model.Metric;
-import com.mtailor.meetRics.service.chart.MetricVisualizer;
+import com.mtailor.meetrics.model.Metric;
+import com.mtailor.meetrics.service.chart.MetricVisualizer;
 
 /**
  * This class is responsible for visualizing metric request in real time.

@@ -1,6 +1,6 @@
-package com.mtailor.meetRics.service.chart;
+package com.mtailor.meetrics.service.chart;
 
-import com.mtailor.meetRics.model.Metric;
+import com.mtailor.meetrics.model.Metric;
 
 /**
  * This interface is used to create a visual representation of metrics.

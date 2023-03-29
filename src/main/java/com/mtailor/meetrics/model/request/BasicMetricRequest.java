@@ -1,4 +1,4 @@
-package com.mtailor.meetRics.model.request;
+package com.mtailor.meetrics.model.request;
 
 /**
  * Basic metric request record for incoming API requests.
