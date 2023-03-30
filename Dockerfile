@@ -1,12 +1,10 @@
-FROM vegardit/graalvm-maven:22.3.1-java17 AS build
-RUN gu install python
-COPY src /home/app/src
-COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package
-
-FROM vegardit/graalvm-maven:22.3.1-java17
-RUN gu install python
-COPY --from=build home/app/target/meetrics-0.0.1-SNAPSHOT.jar app.jar
-COPY --from=build home/app/venv venv
+FROM marcikaa/meetrics:0.9 AS base
 EXPOSE 8080:8080
 ENTRYPOINT ["java","-jar","app.jar"]
+
+#FROM ghcr.io/graalvm/graalvm-ce:22.3.1
+#RUN gu install python
+#ADD target/meetrics-0.0.1-SNAPSHOT.jar app.jar
+#ADD venv venv
+#EXPOSE 8080:8080
+#ENTRYPOINT ["java","-jar","app.jar"]
