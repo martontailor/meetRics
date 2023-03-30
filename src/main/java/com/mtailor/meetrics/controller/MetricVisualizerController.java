@@ -5,14 +5,13 @@ import com.mtailor.meetrics.service.chart.impl.RealTimeMetricVisualizer;
 import com.mtailor.meetrics.service.chart.impl.SimplePythonMetricVisualizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
+@CrossOrigin
 public class MetricVisualizerController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(MetricVisualizerController.class);
@@ -34,8 +33,12 @@ public class MetricVisualizerController {
     public Mono<String> visualize() {
         return simplePythonMetricVisualizer.visualize(null);
     }
+    @GetMapping(value = "/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("OK");
+    }
 
-    @GetMapping(value = "/flux", produces = "image/svg+xml")
+    @GetMapping(value = "/flux", produces = "text/event-stream")
     public Flux<String> visualizeFlux() {
         return realTimeMetricVisualizer.visualize(null).doOnNext(LOGGER::info);
     }
