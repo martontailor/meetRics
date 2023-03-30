@@ -41,7 +41,7 @@ public class RealTimeMetricVisualizer implements MetricVisualizer {
     }
 
     private String getDecodedChart(final Metric metric) {
-        return decode(pythonChartVisualizer.render(metric));
+        return splitter.getPureBase64(pythonChartVisualizer.render(metric));
     }
 
     private String decode(String result) {
