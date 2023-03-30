@@ -7,6 +7,8 @@ import com.mtailor.meetrics.service.chart.MetricVisualizer;
 import com.mtailor.meetrics.service.chart.PythonChartVisualizer;
 import com.mtailor.meetrics.service.provider.MetricProvider;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.Base64;
 
@@ -28,11 +30,13 @@ public class SimplePythonMetricVisualizer implements MetricVisualizer {
     }
 
     @Override
-    public String visualize(final BasicMetricRequest request) {
+    public Mono<String> visualize(final BasicMetricRequest request) {
+        return metricProvider.provide(request).collectList().publishOn(Schedulers.boundedElastic())
+                .map(metricTuples -> getDecodedChart(new Metric("Metric from mono", metricTuples)));
+    }
 
-        String result = pythonChartVisualizer.render(new Metric("Metric from java", metricProvider.provide(request)));
-
-        return decode(result);
+    private String getDecodedChart(final Metric metric) {
+        return decode(pythonChartVisualizer.render(metric));
     }
 
     private String decode(String result) {
