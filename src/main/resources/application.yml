@@ -1,3 +1,7 @@
 python:
   venv: ${PYTHON_VENV_PATH:venv/bin/graalpy}
   name: ${PYTHON_CHARTVISUALIZER_NAME:first.py}
+
+aws:
+  dynamoDB:
+    endpoint: https://dynamodb.eu-west-1.amazonaws.com/

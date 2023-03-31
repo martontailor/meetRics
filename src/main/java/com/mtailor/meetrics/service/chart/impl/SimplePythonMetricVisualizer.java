@@ -6,6 +6,7 @@ import com.mtailor.meetrics.service.Base64SvgSplitter;
 import com.mtailor.meetrics.service.chart.MetricVisualizer;
 import com.mtailor.meetrics.service.chart.PythonChartVisualizer;
 import com.mtailor.meetrics.service.provider.MetricProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -23,7 +24,7 @@ public class SimplePythonMetricVisualizer implements MetricVisualizer {
     private final MetricProvider metricProvider;
 
     public SimplePythonMetricVisualizer(PythonChartVisualizer pythonChartVisualizer, Base64SvgSplitter splitter,
-                                        MetricProvider metricProvider) {
+                                        @Qualifier("randomMetricProvider") MetricProvider metricProvider) {
         this.pythonChartVisualizer = pythonChartVisualizer;
         this.splitter = splitter;
         this.metricProvider = metricProvider;

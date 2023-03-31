@@ -40,7 +40,7 @@ public class MetricVisualizerController {
 
     @GetMapping(value = "/flux", produces = "text/event-stream")
     public Flux<String> visualizeFlux() {
-        return realTimeMetricVisualizer.visualize(null).doOnNext(LOGGER::info);
+        return realTimeMetricVisualizer.visualize(null);
     }
 
 }

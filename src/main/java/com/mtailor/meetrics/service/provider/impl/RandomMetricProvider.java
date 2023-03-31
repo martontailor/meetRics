@@ -33,7 +33,7 @@ public class RandomMetricProvider implements MetricProvider {
 
         List<MetricTuple> metricTuples = new ArrayList<>();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             int randomValue = (int) Math.floor(Math.random() * 100);
             metricTuples.add(new MetricTuple(randomValue, getTimeInMs.apply(i)));
         }

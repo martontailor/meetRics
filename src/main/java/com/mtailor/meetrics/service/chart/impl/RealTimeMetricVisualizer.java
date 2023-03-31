@@ -7,13 +7,16 @@ import com.mtailor.meetrics.service.Base64SvgSplitter;
 import com.mtailor.meetrics.service.chart.MetricVisualizer;
 import com.mtailor.meetrics.service.chart.PythonChartVisualizer;
 import com.mtailor.meetrics.service.provider.MetricProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class is responsible for visualizing metric request in real time.
@@ -25,7 +28,7 @@ public class RealTimeMetricVisualizer implements MetricVisualizer {
     private final MetricProvider metricProvider;
 
     public RealTimeMetricVisualizer(PythonChartVisualizer pythonChartVisualizer, Base64SvgSplitter splitter,
-                                    MetricProvider metricProvider) {
+                                    @Qualifier("DbMetricProvider") MetricProvider metricProvider) {
         this.pythonChartVisualizer = pythonChartVisualizer;
         this.splitter = splitter;
         this.metricProvider = metricProvider;
@@ -40,8 +43,10 @@ public class RealTimeMetricVisualizer implements MetricVisualizer {
                 .map(metricTuple -> getDecodedChart(new Metric("Flux metric", tuples)));
     }
 
+    //TODO Optimize sorting
     private String getDecodedChart(final Metric metric) {
-        return splitter.getPureBase64(pythonChartVisualizer.render(metric));
+        Metric sorted = new Metric("Sorted Metrics", metric.metrics().stream().sorted(Comparator.comparingLong(MetricTuple::timeInMs)).collect(Collectors.toList()));
+        return splitter.getPureBase64(pythonChartVisualizer.render(sorted));
     }
 
     private String decode(String result) {
