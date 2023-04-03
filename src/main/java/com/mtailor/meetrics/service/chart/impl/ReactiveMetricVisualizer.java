@@ -2,7 +2,7 @@ package com.mtailor.meetrics.service.chart.impl;
 
 import com.mtailor.meetrics.model.Metric;
 import com.mtailor.meetrics.model.MetricTuple;
-import com.mtailor.meetrics.model.request.BasicMetricRequest;
+import com.mtailor.meetrics.model.filter.BasicFilter;
 import com.mtailor.meetrics.service.Base64SvgSplitter;
 import com.mtailor.meetrics.service.chart.MetricVisualizer;
 import com.mtailor.meetrics.service.chart.PythonChartVisualizer;
@@ -22,12 +22,12 @@ import java.util.stream.Collectors;
  * This class is responsible for visualizing metric request in real time.
  */
 @Service
-public class RealTimeMetricVisualizer implements MetricVisualizer {
+public class ReactiveMetricVisualizer implements MetricVisualizer {
     private final PythonChartVisualizer pythonChartVisualizer;
     private final Base64SvgSplitter splitter;
     private final MetricProvider metricProvider;
 
-    public RealTimeMetricVisualizer(PythonChartVisualizer pythonChartVisualizer, Base64SvgSplitter splitter,
+    public ReactiveMetricVisualizer(PythonChartVisualizer pythonChartVisualizer, Base64SvgSplitter splitter,
                                     @Qualifier("DbMetricProvider") MetricProvider metricProvider) {
         this.pythonChartVisualizer = pythonChartVisualizer;
         this.splitter = splitter;
@@ -35,7 +35,7 @@ public class RealTimeMetricVisualizer implements MetricVisualizer {
     }
 
     @Override
-    public Flux<String> visualize(final BasicMetricRequest request) {
+    public Flux<String> visualize(final BasicFilter request) {
         List<MetricTuple> tuples = new ArrayList<>();
         return metricProvider.provide(request)
                 .doOnNext(tuples::add)
@@ -46,11 +46,11 @@ public class RealTimeMetricVisualizer implements MetricVisualizer {
     //TODO Optimize sorting
     private String getDecodedChart(final Metric metric) {
         Metric sorted = new Metric("Sorted Metrics", metric.metrics().stream().sorted(Comparator.comparingLong(MetricTuple::timeInMs)).collect(Collectors.toList()));
-        return splitter.getPureBase64(pythonChartVisualizer.render(sorted));
+        return decode(splitter.getPureBase64(pythonChartVisualizer.render(sorted)));
     }
 
     private String decode(String result) {
-        String pureBase64 = splitter.getPureBase64(result);
-        return new String(Base64.getDecoder().decode(pureBase64));
+//        String pureBase64 = splitter.getPureBase64(result);
+        return new String(Base64.getDecoder().decode(result));
     }
 }

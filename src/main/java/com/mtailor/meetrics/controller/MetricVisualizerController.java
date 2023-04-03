@@ -1,13 +1,13 @@
 package com.mtailor.meetrics.controller;
 
+import com.mtailor.meetrics.converter.BasicRequestMapper;
 import com.mtailor.meetrics.model.request.BasicMetricRequest;
-import com.mtailor.meetrics.service.chart.impl.RealTimeMetricVisualizer;
-import com.mtailor.meetrics.service.chart.impl.SimplePythonMetricVisualizer;
+import com.mtailor.meetrics.service.chart.impl.ReactiveMetricVisualizer;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -15,29 +15,23 @@ import reactor.core.publisher.Mono;
 @CrossOrigin
 public class MetricVisualizerController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(MetricVisualizerController.class);
-    private final SimplePythonMetricVisualizer simplePythonMetricVisualizer;
-    private final RealTimeMetricVisualizer realTimeMetricVisualizer;
+    private final ReactiveMetricVisualizer reactiveMetricVisualizer;
+    private BasicRequestMapper mapper;
 
-    public MetricVisualizerController(SimplePythonMetricVisualizer simplePythonMetricVisualizer,
-                                      RealTimeMetricVisualizer realTimeMetricVisualizer) {
-        this.simplePythonMetricVisualizer = simplePythonMetricVisualizer;
-        this.realTimeMetricVisualizer = realTimeMetricVisualizer;
+    public MetricVisualizerController(final ReactiveMetricVisualizer reactiveMetricVisualizer,
+                                      final BasicRequestMapper mapper) {
+        this.reactiveMetricVisualizer = reactiveMetricVisualizer;
+        this.mapper = mapper;
     }
 
-    @PostMapping(value = "/test", produces = "image/svg+xml")
+    @PostMapping(value = "/mono", produces = "image/svg+xml")
     public Mono<String> visualize(@Valid @RequestBody BasicMetricRequest request) {
-        return realTimeMetricVisualizer.visualize(request).next();
+        return reactiveMetricVisualizer.visualize(mapper.mapRequestToInnerObject(request)).next();
     }
 
-    @GetMapping(value = "/test", produces = "image/svg+xml")
-    public Mono<String> visualize() {
-        return simplePythonMetricVisualizer.visualize(null);
-    }
-
-    @GetMapping(value = "/flux", produces = "text/event-stream")
-    public Flux<String> visualizeFlux() {
-        return realTimeMetricVisualizer.visualize(null);
+    @PostMapping(value = "/flux", produces = "text/event-stream")
+    public Flux<String> visualizeFlux(@Valid @RequestBody BasicMetricRequest request) {
+        return reactiveMetricVisualizer.visualize(mapper.mapRequestToInnerObject(request));
     }
 
 }

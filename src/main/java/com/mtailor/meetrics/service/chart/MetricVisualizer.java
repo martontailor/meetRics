@@ -1,6 +1,6 @@
 package com.mtailor.meetrics.service.chart;
 
-import com.mtailor.meetrics.model.request.BasicMetricRequest;
+import com.mtailor.meetrics.model.filter.BasicFilter;
 import reactor.core.CorePublisher;
 
 /**
@@ -14,6 +14,6 @@ public interface MetricVisualizer {
      * @param request filter request
      * @return base64 encoded svg
      */
-    CorePublisher<String> visualize(final BasicMetricRequest request);
+    CorePublisher<String> visualize(final BasicFilter request);
 
 }

@@ -1,6 +1,7 @@
 package com.mtailor.meetrics.service.provider;
 
 import com.mtailor.meetrics.model.MetricTuple;
+import com.mtailor.meetrics.model.filter.BasicFilter;
 import com.mtailor.meetrics.model.request.BasicMetricRequest;
 import reactor.core.publisher.Flux;
 
@@ -13,6 +14,6 @@ public interface MetricProvider {
      * @param request filter
      * @return flux of MetricTuples which contains data points
      */
-    Flux<MetricTuple> provide(final BasicMetricRequest request);
+    Flux<MetricTuple> provide(final BasicFilter request);
 
 }

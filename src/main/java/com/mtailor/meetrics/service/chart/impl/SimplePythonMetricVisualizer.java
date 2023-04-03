@@ -1,6 +1,7 @@
 package com.mtailor.meetrics.service.chart.impl;
 
 import com.mtailor.meetrics.model.Metric;
+import com.mtailor.meetrics.model.filter.BasicFilter;
 import com.mtailor.meetrics.model.request.BasicMetricRequest;
 import com.mtailor.meetrics.service.Base64SvgSplitter;
 import com.mtailor.meetrics.service.chart.MetricVisualizer;
@@ -31,7 +32,7 @@ public class SimplePythonMetricVisualizer implements MetricVisualizer {
     }
 
     @Override
-    public Mono<String> visualize(final BasicMetricRequest request) {
+    public Mono<String> visualize(final BasicFilter request) {
         return metricProvider.provide(request).collectList().publishOn(Schedulers.boundedElastic())
                 .map(metricTuples -> getDecodedChart(new Metric("Metric from mono", metricTuples)));
     }

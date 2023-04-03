@@ -2,6 +2,7 @@ package com.mtailor.meetrics.service.provider.impl;
 
 import com.mtailor.meetrics.data.repository.MetricRepository;
 import com.mtailor.meetrics.model.MetricTuple;
+import com.mtailor.meetrics.model.filter.BasicFilter;
 import com.mtailor.meetrics.model.request.BasicMetricRequest;
 import com.mtailor.meetrics.service.provider.MetricProvider;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ public class DbMetricProvider implements MetricProvider {
     }
 
     @Override
-    public Flux<MetricTuple> provide(BasicMetricRequest request) {
+    public Flux<MetricTuple> provide(BasicFilter request) {
         return Flux.from(repository.getAllMetrics(request))
                 .map(element -> new MetricTuple(element.getValue(), element.getTimestamp()));
     }

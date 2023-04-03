@@ -1,6 +1,7 @@
 package com.mtailor.meetrics.data.repository;
 
 import com.mtailor.meetrics.data.dao.MetricDAO;
+import com.mtailor.meetrics.model.filter.BasicFilter;
 import com.mtailor.meetrics.model.request.BasicMetricRequest;
 import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.core.async.SdkPublisher;
@@ -22,7 +23,7 @@ public class MetricRepository {
         this.metricTable = enhancedAsyncClient.table(TABLE_NAME, TableSchema.fromBean(MetricDAO.class));
     }
 
-    public SdkPublisher<MetricDAO> getAllMetrics(final BasicMetricRequest request) {
+    public SdkPublisher<MetricDAO> getAllMetrics(final BasicFilter request) {
         return metricTable.scan().items()
                 .filter(filterEntries(request));
     }
@@ -34,7 +35,7 @@ public class MetricRepository {
      * Using the filter expression does not reduce the cost of the scan, since it is applied
      * <em>after</em> the database has found matching items.
      */
-    private static Predicate<MetricDAO> filterEntries(BasicMetricRequest request) {
+    private static Predicate<MetricDAO> filterEntries(BasicFilter request) {
         return element -> request.name().equalsIgnoreCase(element.getMetricName()) &&
                 request.startTimeMs() <= element.getTimestamp() &&
                 request.endTimeMs() >= element.getTimestamp();

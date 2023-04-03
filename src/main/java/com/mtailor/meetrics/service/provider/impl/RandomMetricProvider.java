@@ -1,7 +1,7 @@
 package com.mtailor.meetrics.service.provider.impl;
 
 import com.mtailor.meetrics.model.MetricTuple;
-import com.mtailor.meetrics.model.request.BasicMetricRequest;
+import com.mtailor.meetrics.model.filter.BasicFilter;
 import com.mtailor.meetrics.service.provider.MetricProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class RandomMetricProvider implements MetricProvider {
     private Function<Integer, Long> getTimeInMs = (sec) -> LocalDateTime.now().plusSeconds(sec).toInstant(ZoneOffset.UTC).toEpochMilli();
 
     @Override
-    public Flux<MetricTuple> provide(BasicMetricRequest request) {
+    public Flux<MetricTuple> provide(BasicFilter request) {
         return getRandomMetrics();
     }
 
@@ -38,7 +38,7 @@ public class RandomMetricProvider implements MetricProvider {
             metricTuples.add(new MetricTuple(randomValue, getTimeInMs.apply(i)));
         }
 
-        return Flux.fromIterable(metricTuples).doOnNext(e->LOGGER.info(e.toString())).delayElements(Duration.ofSeconds(1));
+        return Flux.fromIterable(metricTuples).doOnNext(e -> LOGGER.info(e.toString())).delayElements(Duration.ofSeconds(1));
     }
 
 }
