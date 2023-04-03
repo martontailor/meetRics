@@ -22,8 +22,7 @@ public class DbMetricProvider implements MetricProvider {
 
     @Override
     public Flux<MetricTuple> provide(BasicMetricRequest request) {
-        return Flux.from(repository.getAllCustomer().items())
-                .doOnNext(e -> logger.info("New element " + e.getMetricName()))
+        return Flux.from(repository.getAllMetrics(request))
                 .map(element -> new MetricTuple(element.getValue(), element.getTimestamp()));
     }
 }
