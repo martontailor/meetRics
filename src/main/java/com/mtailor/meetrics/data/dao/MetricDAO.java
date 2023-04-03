@@ -30,19 +30,23 @@ public class MetricDAO {
         return value;
     }
 
-    public void setMetricName(String metricName) {
-        this.metricName = metricName;
-    }
-
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public void setId(String id) {
+    public MetricDAO setId(String id) {
         this.id = id;
+        return this;
     }
 
-    public void setValue(Double value) {
+    public MetricDAO setMetricName(String metricName) {
+        this.metricName = metricName;
+        return this;
+    }
+
+    public MetricDAO setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public MetricDAO setValue(Double value) {
         this.value = value;
+        return this;
     }
 }

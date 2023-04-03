@@ -2,43 +2,31 @@ package com.mtailor.meetrics.data.repository;
 
 import com.mtailor.meetrics.data.dao.MetricDAO;
 import com.mtailor.meetrics.model.filter.BasicFilter;
-import com.mtailor.meetrics.model.request.BasicMetricRequest;
+import com.mtailor.meetrics.service.filter.MetricDAOResultFilter;
 import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.core.async.SdkPublisher;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbAsyncTable;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 
-import java.util.function.Predicate;
-
 @Repository
 public class MetricRepository {
 
-    public static final String TABLE_NAME = "meetrics-metrics";
+    private static final String TABLE_NAME = "meetrics-metrics";
     private final DynamoDbEnhancedAsyncClient enhancedAsyncClient;
     private final DynamoDbAsyncTable<MetricDAO> metricTable;
+    private final MetricDAOResultFilter filter;
 
-    public MetricRepository(DynamoDbEnhancedAsyncClient asyncClient) {
+    public MetricRepository(DynamoDbEnhancedAsyncClient asyncClient, MetricDAOResultFilter metricDAOResultFilter) {
         this.enhancedAsyncClient = asyncClient;
+        this.filter = metricDAOResultFilter;
         this.metricTable = enhancedAsyncClient.table(TABLE_NAME, TableSchema.fromBean(MetricDAO.class));
     }
 
     public SdkPublisher<MetricDAO> getAllMetrics(final BasicFilter request) {
         return metricTable.scan().items()
-                .filter(filterEntries(request));
+                .filter(filter.filterEntries(request));
     }
 
-    /**
-     * This method is responsible for filtering results from java code.
-     * Dynamo db enhanced client filtering happens after db entities are fetched.
-     * {@Link software.amazon.awssdk.enhanced.dynamodb.model.ScanEnhancedRequest.Builder#filterExpression Documentation}
-     * Using the filter expression does not reduce the cost of the scan, since it is applied
-     * <em>after</em> the database has found matching items.
-     */
-    private static Predicate<MetricDAO> filterEntries(BasicFilter request) {
-        return element -> request.name().equalsIgnoreCase(element.getMetricName()) &&
-                request.startTimeMs() <= element.getTimestamp() &&
-                request.endTimeMs() >= element.getTimestamp();
-    }
 
 }
