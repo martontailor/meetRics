@@ -15,16 +15,16 @@ public class MetricRepository {
 
     public static final String TABLE_NAME = "meetrics-metrics";
     private final DynamoDbEnhancedAsyncClient enhancedAsyncClient;
-    private final DynamoDbAsyncTable<MetricDAO> customerDynamoDbAsyncTable;
+    private final DynamoDbAsyncTable<MetricDAO> metricTable;
 
     public MetricRepository(DynamoDbEnhancedAsyncClient asyncClient) {
         this.enhancedAsyncClient = asyncClient;
-        this.customerDynamoDbAsyncTable = enhancedAsyncClient.table(TABLE_NAME, TableSchema.fromBean(MetricDAO.class));
+        this.metricTable = enhancedAsyncClient.table(TABLE_NAME, TableSchema.fromBean(MetricDAO.class));
     }
 
     public SdkPublisher<MetricDAO> getAllMetrics(final BasicMetricRequest request) {
-        return customerDynamoDbAsyncTable.scan().items()
-                .filter(filterForMetricName(request));
+        return metricTable.scan().items()
+                .filter(filterEntries(request));
     }
 
     /**
@@ -34,9 +34,10 @@ public class MetricRepository {
      * Using the filter expression does not reduce the cost of the scan, since it is applied
      * <em>after</em> the database has found matching items.
      */
-    private static Predicate<MetricDAO> filterForMetricName(BasicMetricRequest request) {
-        return e -> request.name().equalsIgnoreCase(e.getMetricName());
+    private static Predicate<MetricDAO> filterEntries(BasicMetricRequest request) {
+        return element -> request.name().equalsIgnoreCase(element.getMetricName()) &&
+                request.startTimeMs() <= element.getTimestamp() &&
+                request.endTimeMs() >= element.getTimestamp();
     }
-
 
 }
