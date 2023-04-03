@@ -3,6 +3,7 @@ package com.mtailor.meetrics.controller;
 import com.mtailor.meetrics.model.request.BasicMetricRequest;
 import com.mtailor.meetrics.service.chart.impl.RealTimeMetricVisualizer;
 import com.mtailor.meetrics.service.chart.impl.SimplePythonMetricVisualizer;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +26,15 @@ public class MetricVisualizerController {
     }
 
     @PostMapping(value = "/test", produces = "image/svg+xml")
-    public Mono<String> visualize(@RequestBody BasicMetricRequest request) {
-        return simplePythonMetricVisualizer.visualize(request);
+    public Mono<String> visualize(@Valid @RequestBody BasicMetricRequest request) {
+        return realTimeMetricVisualizer.visualize(request).next();
     }
 
     @GetMapping(value = "/test", produces = "image/svg+xml")
     public Mono<String> visualize() {
         return simplePythonMetricVisualizer.visualize(null);
     }
+
     @GetMapping(value = "/health")
     public ResponseEntity<String> health() {
         return ResponseEntity.ok("OK");
