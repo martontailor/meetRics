@@ -12,13 +12,14 @@ import java.net.URI;
 
 @Configuration
 public class DynamoDbConfig {
+    private static final String PROFILE_NAME = "default";
     @Value("${aws.dynamodb.endpoint}")
     private String dynamoDbEndPointUrl;
 
     @Bean
     public DynamoDbAsyncClient getDynamoDbAsyncClient() {
         return DynamoDbAsyncClient.builder()
-                .credentialsProvider(ProfileCredentialsProvider.create("default"))
+                .credentialsProvider(ProfileCredentialsProvider.create(PROFILE_NAME))
                 .region(Region.EU_WEST_1)
                 .endpointOverride(URI.create(dynamoDbEndPointUrl))
                 .build();

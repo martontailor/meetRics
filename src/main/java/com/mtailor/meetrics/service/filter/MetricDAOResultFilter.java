@@ -16,7 +16,7 @@ public class MetricDAOResultFilter {
      * Using the filter expression does not reduce the cost of the scan, since it is applied
      * <em>after</em> the database has found matching items.
      */
-    public Predicate<MetricDAO> filterEntries(BasicFilter request) {
+    public Predicate<MetricDAO> filterEntries(final BasicFilter request) {
         return element -> request.name().equalsIgnoreCase(element.getMetricName()) &&
                 request.startTimeMs() <= element.getTimestamp() &&
                 request.endTimeMs() >= element.getTimestamp();

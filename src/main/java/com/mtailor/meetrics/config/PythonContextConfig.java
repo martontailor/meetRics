@@ -16,12 +16,12 @@ import java.util.Objects;
 @Configuration
 public class PythonContextConfig {
 
-    public static final String PYTHON_OPTION_FORCE_IMPORT_SITE_KEY = "python.ForceImportSite";
-    public static final String PYTHON_OPTION_EXECUTABLE_KEY = "python.Executable";
-    public static final String PYTHON = "python";
-    public static final String PYTHON_CONTEXT = "firstPythonContext";
-    public static final String PYTHON_CLASS_NAME = "ChartVisualizer";
-    public static final String PYTHON_SOURCE = "pythonSource";
+    private static final String PYTHON_OPTION_FORCE_IMPORT_SITE_KEY = "python.ForceImportSite";
+    private static final String PYTHON_OPTION_EXECUTABLE_KEY = "python.Executable";
+    private static final String PYTHON = "python";
+    private static final String PYTHON_CONTEXT = "firstPythonContext";
+    private static final String PYTHON_CLASS_NAME = "ChartVisualizer";
+    private static final String PYTHON_SOURCE = "pythonSource";
     @Value("${python.venv}")
     private String pythonVenv;
     @Value("${python.name}")

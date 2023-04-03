@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
+ * Only for testing purposes.
  * Provides random metricTuples.
  */
 @Component
@@ -25,7 +26,7 @@ public class RandomMetricProvider implements MetricProvider {
     private Function<Integer, Long> getTimeInMs = (sec) -> LocalDateTime.now().plusSeconds(sec).toInstant(ZoneOffset.UTC).toEpochMilli();
 
     @Override
-    public Flux<MetricTuple> provide(BasicFilter request) {
+    public Flux<MetricTuple> provide(final BasicFilter request) {
         return getRandomMetrics();
     }
 

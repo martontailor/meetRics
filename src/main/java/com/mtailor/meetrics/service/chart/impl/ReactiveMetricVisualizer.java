@@ -13,13 +13,12 @@ import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * This class is responsible for visualizing metric request in real time.
+ * Reactive implementation of metric visualization.
  */
 @Service
 public class ReactiveMetricVisualizer implements MetricVisualizer {
@@ -27,8 +26,8 @@ public class ReactiveMetricVisualizer implements MetricVisualizer {
     private final Base64SvgSplitter splitter;
     private final MetricProvider metricProvider;
 
-    public ReactiveMetricVisualizer(PythonChartVisualizer pythonChartVisualizer, Base64SvgSplitter splitter,
-                                    @Qualifier("DbMetricProvider") MetricProvider metricProvider) {
+    public ReactiveMetricVisualizer(final PythonChartVisualizer pythonChartVisualizer, final Base64SvgSplitter splitter,
+                                    @Qualifier("DbMetricProvider") final MetricProvider metricProvider) {
         this.pythonChartVisualizer = pythonChartVisualizer;
         this.splitter = splitter;
         this.metricProvider = metricProvider;
@@ -45,12 +44,9 @@ public class ReactiveMetricVisualizer implements MetricVisualizer {
 
     //TODO Optimize sorting
     private String getDecodedChart(final Metric metric) {
-        Metric sorted = new Metric("Sorted Metrics", metric.metrics().stream().sorted(Comparator.comparingLong(MetricTuple::timeInMs)).collect(Collectors.toList()));
-        return decode(splitter.getPureBase64(pythonChartVisualizer.render(sorted)));
+        Metric sorted = new Metric("Sorted Metrics", metric.metrics().stream()
+                .sorted(Comparator.comparingLong(MetricTuple::timeInMs)).collect(Collectors.toList()));
+        return splitter.getPureBase64(pythonChartVisualizer.render(sorted));
     }
 
-    private String decode(String result) {
-//        String pureBase64 = splitter.getPureBase64(result);
-        return new String(Base64.getDecoder().decode(result));
-    }
 }

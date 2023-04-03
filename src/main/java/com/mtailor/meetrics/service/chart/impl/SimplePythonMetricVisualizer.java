@@ -2,7 +2,6 @@ package com.mtailor.meetrics.service.chart.impl;
 
 import com.mtailor.meetrics.model.Metric;
 import com.mtailor.meetrics.model.filter.BasicFilter;
-import com.mtailor.meetrics.model.request.BasicMetricRequest;
 import com.mtailor.meetrics.service.Base64SvgSplitter;
 import com.mtailor.meetrics.service.chart.MetricVisualizer;
 import com.mtailor.meetrics.service.chart.PythonChartVisualizer;
@@ -11,8 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
-
-import java.util.Base64;
 
 /**
  * This class is responsible for visualizing a single metric request.
@@ -24,8 +21,8 @@ public class SimplePythonMetricVisualizer implements MetricVisualizer {
     private final Base64SvgSplitter splitter;
     private final MetricProvider metricProvider;
 
-    public SimplePythonMetricVisualizer(PythonChartVisualizer pythonChartVisualizer, Base64SvgSplitter splitter,
-                                        @Qualifier("randomMetricProvider") MetricProvider metricProvider) {
+    public SimplePythonMetricVisualizer(final PythonChartVisualizer pythonChartVisualizer, final Base64SvgSplitter splitter,
+                                        @Qualifier("randomMetricProvider") final MetricProvider metricProvider) {
         this.pythonChartVisualizer = pythonChartVisualizer;
         this.splitter = splitter;
         this.metricProvider = metricProvider;
@@ -38,12 +35,7 @@ public class SimplePythonMetricVisualizer implements MetricVisualizer {
     }
 
     private String getDecodedChart(final Metric metric) {
-        return decode(pythonChartVisualizer.render(metric));
-    }
-
-    private String decode(String result) {
-        String pureBase64 = splitter.getPureBase64(result);
-        return new String(Base64.getDecoder().decode(pureBase64));
+        return splitter.getPureBase64(pythonChartVisualizer.render(metric));
     }
 
 }

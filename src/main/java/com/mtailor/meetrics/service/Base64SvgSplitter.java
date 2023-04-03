@@ -7,8 +7,8 @@ import java.util.Optional;
 @Component
 public class Base64SvgSplitter {
 
-    public static final int PURE_BASE64_PART = 1;
-    public static final String SVG_DELIMITER = ",";
+    private static final int PURE_BASE64_PART = 1;
+    private static final String SVG_DELIMITER = ",";
 
     public String getPureBase64(final String base64Svg) {
         return Optional.ofNullable(base64Svg)

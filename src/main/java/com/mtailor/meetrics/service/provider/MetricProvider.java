@@ -2,7 +2,6 @@ package com.mtailor.meetrics.service.provider;
 
 import com.mtailor.meetrics.model.MetricTuple;
 import com.mtailor.meetrics.model.filter.BasicFilter;
-import com.mtailor.meetrics.model.request.BasicMetricRequest;
 import reactor.core.publisher.Flux;
 
 /**

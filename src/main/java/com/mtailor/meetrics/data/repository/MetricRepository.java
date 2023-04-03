@@ -17,7 +17,7 @@ public class MetricRepository {
     private final DynamoDbAsyncTable<MetricDAO> metricTable;
     private final MetricDAOResultFilter filter;
 
-    public MetricRepository(DynamoDbEnhancedAsyncClient asyncClient, MetricDAOResultFilter metricDAOResultFilter) {
+    public MetricRepository(final DynamoDbEnhancedAsyncClient asyncClient, final MetricDAOResultFilter metricDAOResultFilter) {
         this.enhancedAsyncClient = asyncClient;
         this.filter = metricDAOResultFilter;
         this.metricTable = enhancedAsyncClient.table(TABLE_NAME, TableSchema.fromBean(MetricDAO.class));

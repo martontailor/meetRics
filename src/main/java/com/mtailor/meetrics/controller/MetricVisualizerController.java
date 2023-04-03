@@ -25,12 +25,12 @@ public class MetricVisualizerController {
     }
 
     @PostMapping(value = "/mono", produces = "image/svg+xml")
-    public Mono<String> visualize(@Valid @RequestBody BasicMetricRequest request) {
+    public Mono<String> visualize(@Valid @RequestBody final BasicMetricRequest request) {
         return reactiveMetricVisualizer.visualize(mapper.mapRequestToInnerObject(request)).next();
     }
 
     @PostMapping(value = "/flux", produces = "text/event-stream")
-    public Flux<String> visualizeFlux(@Valid @RequestBody BasicMetricRequest request) {
+    public Flux<String> visualizeFlux(@Valid @RequestBody final BasicMetricRequest request) {
         return reactiveMetricVisualizer.visualize(mapper.mapRequestToInnerObject(request));
     }
 

@@ -9,9 +9,10 @@ public interface PythonChartVisualizer {
 
     /**
      * Method to render SVG from metrics provided in metric param
+     *
      * @param metric contains necessary information to draw chart
      * @return Base64 encoded SVG file
      */
-    String render(Metric metric);
+    String render(final Metric metric);
 
 }

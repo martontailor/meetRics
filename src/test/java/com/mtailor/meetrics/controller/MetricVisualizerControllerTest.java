@@ -21,10 +21,10 @@ import reactor.core.publisher.Flux;
 @WebFluxTest(controllers = MetricVisualizerController.class)
 class MetricVisualizerControllerTest {
 
-    public static final String TEST_NAME = "TestName";
-    public static final String TEST_NAME2 = "";
-    public static final int START_TIME_MS = 1;
-    public static final int END_TIME_MS = 999;
+    private static final String TEST_NAME = "TestName";
+    private static final String TEST_NAME2 = "";
+    private static final int START_TIME_MS = 1;
+    private static final int END_TIME_MS = 999;
     @MockBean
     private ReactiveMetricVisualizer reactiveMetricVisualizer;
     @MockBean
@@ -65,7 +65,6 @@ class MetricVisualizerControllerTest {
                 .expectStatus().isBadRequest()
                 .expectBody(String.class);
     }
-
 
 
 }
