@@ -35,11 +35,6 @@ public class MetricVisualizerController {
         return simplePythonMetricVisualizer.visualize(null);
     }
 
-    @GetMapping(value = "/health")
-    public ResponseEntity<String> health() {
-        return ResponseEntity.ok("OK");
-    }
-
     @GetMapping(value = "/flux", produces = "text/event-stream")
     public Flux<String> visualizeFlux() {
         return realTimeMetricVisualizer.visualize(null);
