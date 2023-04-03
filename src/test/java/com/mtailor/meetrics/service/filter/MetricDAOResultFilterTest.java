@@ -14,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 class MetricDAOResultFilterTest {
 
-    private static final MetricDAO GOOD_ITEM_1 = new MetricDAO().setTimestamp(10L).setMetricName("TestName");
-    private static final MetricDAO GOOD_ITEM_2 = new MetricDAO().setTimestamp(12L).setMetricName("TestName");
-    private static final MetricDAO GOOD_ITEM_3 = new MetricDAO().setTimestamp(11L).setMetricName("TestName");
+    private static final MetricDAO GOOD_ITEM_1 = MetricDAO.builder().timestamp(10L).metricName("TestName").build();
+    private static final MetricDAO GOOD_ITEM_2 = MetricDAO.builder().timestamp(12L).metricName("TestName").build();
+    private static final MetricDAO GOOD_ITEM_3 = MetricDAO.builder().timestamp(11L).metricName("TestName").build();
     public MetricDAOResultFilter filter;
 
     @BeforeEach
@@ -30,22 +30,20 @@ class MetricDAOResultFilterTest {
         BasicFilter basicFilter = new BasicFilter("TestName", 10L, 12L);
 
         //when
-        List<MetricDAO> actual = getInputList().stream().filter(filter.filterEntries(basicFilter))
-                .toList();
+        List<MetricDAO> actual = getInputList().stream().filter(filter.filterEntries(basicFilter)).toList();
 
         //then
         assertEquals(getExpected(), actual);
     }
 
     private List<MetricDAO> getInputList() {
-        MetricDAO metricWithGoodNameAndBadTimestamp = new MetricDAO().setTimestamp(19L).setMetricName("TestName");
-        MetricDAO metricWithGoodNameAndBadTimestamp2 = new MetricDAO().setTimestamp(5L).setMetricName("TestName");
-        MetricDAO metricWithBadNameAndGoodTimestamp = new MetricDAO().setTimestamp(12L).setMetricName("TestName2");
-        MetricDAO metricWithBadNameAndBadTimestamp = new MetricDAO().setTimestamp(14L).setMetricName("TestName2");
+        MetricDAO metricWithGoodNameAndBadTimestamp = MetricDAO.builder().timestamp(19L).metricName("TestName").build();
+        MetricDAO metricWithGoodNameAndBadTimestamp2 = MetricDAO.builder().timestamp(5L).metricName("TestName").build();
+        MetricDAO metricWithBadNameAndGoodTimestamp = MetricDAO.builder().timestamp(12L).metricName("TestName2").build();
+        MetricDAO metricWithBadNameAndBadTimestamp = MetricDAO.builder().timestamp(14L).metricName("TestName2").build();
 
-        return List.of(GOOD_ITEM_1, GOOD_ITEM_2, GOOD_ITEM_3,
-                metricWithGoodNameAndBadTimestamp, metricWithGoodNameAndBadTimestamp2, metricWithBadNameAndGoodTimestamp,
-                metricWithBadNameAndBadTimestamp);
+        return List.of(GOOD_ITEM_1, GOOD_ITEM_2, GOOD_ITEM_3, metricWithGoodNameAndBadTimestamp,
+                metricWithGoodNameAndBadTimestamp2, metricWithBadNameAndGoodTimestamp, metricWithBadNameAndBadTimestamp);
     }
 
     public List<MetricDAO> getExpected() {

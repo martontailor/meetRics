@@ -1,9 +1,15 @@
 package com.mtailor.meetrics.data.dao;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @DynamoDbBean
 public class MetricDAO {
 
@@ -30,23 +36,19 @@ public class MetricDAO {
         return value;
     }
 
-    public MetricDAO setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
-    public MetricDAO setMetricName(String metricName) {
+    public void setMetricName(String metricName) {
         this.metricName = metricName;
-        return this;
     }
 
-    public MetricDAO setTimestamp(Long timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
-        return this;
     }
 
-    public MetricDAO setValue(Double value) {
+    public void setValue(Double value) {
         this.value = value;
-        return this;
     }
 }
